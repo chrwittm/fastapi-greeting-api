@@ -2,28 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Greeting Form (POST with JSON)</title>
+  <title>Greeting Client – POST Version</title>
 </head>
 <body>
-  <h2>Enter Your Name</h2>
+  <h1>Greeting Client – POST Request (JSON)</h1>
+  <p>This version sends the name to the FastAPI server using a <strong>JSON payload</strong> (POST).</p>
+
+  <label for="nameInput">Enter your name:</label>
   <input type="text" id="nameInput" placeholder="Your name">
-  <button onclick="sendGreeting()">Send Greeting</button>
-  <p id="response"></p>
+  <button onclick="sendGreeting()">Greet</button>
+
+  <pre id="response"></pre>
+
+  <p><a href="index.html">⬅ Back to index</a> |
+     <a href="https://github.com/chrwittm/fastapi-greeting-api" target="_blank">GitHub Repo</a></p>
 
   <script>
     async function sendGreeting() {
       const name = document.getElementById("nameInput").value;
 
-      const response = await fetch("http://127.0.0.1:8000/greet", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ name: name })
-      });
+      try {
+        const response = await fetch("http://127.0.0.1:8000/greet", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ name: name })
+        });
 
-      const result = await response.json();
-      document.getElementById("response").innerText = result.message;
+        const result = await response.json();
+        document.getElementById("response").innerText = JSON.stringify(result, null, 2);
+      } catch (err) {
+        document.getElementById("response").innerText = "ERROR: " + err;
+      }
     }
   </script>
 </body>

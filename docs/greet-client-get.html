@@ -1,18 +1,29 @@
 <!DOCTYPE html>
-<html>
-<head><title>Test Fetch</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Greeting Client – GET Version</title>
+</head>
 <body>
+  <h1>Greeting Client – GET Request</h1>
+  <p>This version sends the name to the FastAPI server using a <strong>URL query parameter</strong> (GET).</p>
+
+  <label for="nameInput">Enter your name:</label>
   <input type="text" id="nameInput" value="Christian">
   <button onclick="callAPI()">Greet</button>
+
   <pre id="result"></pre>
+
+  <p><a href="index.html">⬅ Back to index</a> |
+     <a href="https://github.com/chrwittm/fastapi-greeting-api" target="_blank">GitHub Repo</a></p>
 
   <script>
     function callAPI() {
       const name = document.getElementById("nameInput").value;
-      fetch(`http://127.0.0.1:8000/greet?name=${name}`)
+      fetch(`http://127.0.0.1:8000/greet?name=${encodeURIComponent(name)}`)
         .then(res => res.json())
         .then(data => {
-          document.getElementById("result").innerText = JSON.stringify(data);
+          document.getElementById("result").innerText = JSON.stringify(data, null, 2);
         })
         .catch(err => {
           document.getElementById("result").innerText = "ERROR: " + err;
