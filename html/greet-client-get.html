@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head><title>Test Fetch</title></head>
+<body>
+  <input type="text" id="nameInput" value="Christian">
+  <button onclick="callAPI()">Greet</button>
+  <pre id="result"></pre>
+
+  <script>
+    function callAPI() {
+      const name = document.getElementById("nameInput").value;
+      fetch(`http://127.0.0.1:8000/greet?name=${name}`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("result").innerText = JSON.stringify(data);
+        })
+        .catch(err => {
+          document.getElementById("result").innerText = "ERROR: " + err;
+        });
+    }
+  </script>
+</body>
+</html>

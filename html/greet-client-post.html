@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Greeting Form (POST with JSON)</title>
+</head>
+<body>
+  <h2>Enter Your Name</h2>
+  <input type="text" id="nameInput" placeholder="Your name">
+  <button onclick="sendGreeting()">Send Greeting</button>
+  <p id="response"></p>
+
+  <script>
+    async function sendGreeting() {
+      const name = document.getElementById("nameInput").value;
+
+      const response = await fetch("http://127.0.0.1:8000/greet", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name: name })
+      });
+
+      const result = await response.json();
+      document.getElementById("response").innerText = result.message;
+    }
+  </script>
+</body>
+</html>
